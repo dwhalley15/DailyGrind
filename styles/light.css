@@ -1,0 +1,136 @@
+body{
+  background-color: #FAF9F6;
+  color: #212121;
+  font-family: Rockwell Extra Bold;
+}
+
+#dailyGrindLogo{
+  background-image: url("../images/dailygrindlogoblack.png");
+  width: 440px;
+  height: 440px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+#loginIcon{
+  background-image: url("../images/loginblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#signupIcon{
+  background-image: url("../images/signupblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#updateIcon{
+  background-image: url("../images/updateblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#passwordIcon{
+  background-image: url("../images/passwordblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#deleteIcon{
+  background-image: url("../images/deleteblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#deleteIconSmall{
+  background-image: url("../images/deleteblack.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#yesIcon{
+  background-image: url("../images/yesblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#yesIconSmall{
+  background-image: url("../images/yesblack.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#noIcon{
+  background-image: url("../images/noblack.png");
+  width: 72px;
+  height: 72px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#noIconSmall{
+  background-image: url("../images/noblack.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#addFriendIcon{
+  background-image: url("../images/addfriendblack.png");
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#dailyGrindWords{
+  background-image: url("../images/dailygrindwordsblack.png");
+  width: 440px;
+  height: 140px;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#avatar{
+  background-image: url("../images/avatarblack.png");
+  width: 440px;
+  height: 140px;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.active{
+  opacity: 1 !important;
+  border-bottom: 1px solid #212121;
+}
+
+.navItem{
+  color: #212121;
+  opacity: 0.5;
+}
+
+.textInput{
+  border: 1px solid #212121;
+}
+
+
