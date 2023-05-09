@@ -50,6 +50,10 @@
     <div class="container <?php if(!isset($_SESSION['open_task_form']) || $_SESSION['open_task_form']) echo ", hiddenTab"; ?>" id="taskListContainer">
         <?php include "allTasks.php" ?>
     </div>
+
+    <div class="container hiddenTab", id="friendsLeaderBoard">
+        <?php //Run php include to create the leaderboard ?>
+    </div>
 </div>
 
 <script type="text/javascript" defer>
@@ -257,3 +261,12 @@
         color: green;
     }
 </style>
+
+
+<?php
+    /*
+    SELECT friend_list.user_id_rec, app_user.full_name, app_user.score FROM friend_list 
+    JOIN app_user ON friend_list.user_id_rec = app_user.user_id 
+    WHERE accepted = 'true' AND user_id_req = 1;
+    */
+?>
