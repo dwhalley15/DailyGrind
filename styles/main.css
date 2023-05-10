@@ -8,6 +8,17 @@ a{
   all: unset;
 }
 
+
+/*
+input[type="button"]{
+  width: 33%;
+  height: 100%;
+  color: gray;
+  border-color: black;
+  border: 2% solid black;
+}
+*/
+
 input{
   border-top-style: hidden;
   border-right-style: hidden;
@@ -56,6 +67,7 @@ input:focus{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  background: none;
 }
 
 .friendInvitesList{
@@ -124,6 +136,27 @@ input:focus{
   padding: 5px;
 }
 
+
+.friends2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: green;
+  border: 1px solid grey;
+  margin: 10px;
+  padding: 5px;
+}
+
+.friends3{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: red;
+  border: 1px solid grey;
+  margin: 10px;
+  padding: 5px;
+}
+
 .hiddenTab{
   display:none;
 }
@@ -150,4 +183,9 @@ select{
 .smallAvatar{
   width:36px;
   height: 36px;
+}
+
+.popup-content{
+  color: black;
+  font-family: read-write-plaintext-only;
 }
