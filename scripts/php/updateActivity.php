@@ -19,15 +19,28 @@ if(!empty($_POST) && isset($_POST)){
   
   include '../../resources/database.php';
 
+  $conn = connect();
+
+  $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."'";
+  $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
+  foreach($activities as $activity){
+    if(!($activity['start'] > $endTime || $activity['end'] < $startTime) && !($activity['activity_id'] == $activity_id)){
+      $_SESSION['task_date_error'] = "true";
+      $_SESSION['task_date_error_text'] = "This date overlaps with another task";
+      header("location: ../../templates/account.php");
+      exit;
+    }
+  }
+
   try{
-    $conn = connect();
     $update_score = false;
     $score_query1 = "SELECT state FROM activity WHERE activity_id = '$activity_id'";
-    $score_query1_result = mysqli_fetch_all(mysqli_query($conn, $score_query1), MYSQLI_ASSOC)['state'];
-    if($score_query1_result != "active" && $state == "active") $update_score = true;
-    $query = "UPDATE activity (name, description, category, start, end, state) 
-                VALUES ('".$name."', '".$description."', '".$type."', '".$startTime."', '".$endTime."', '".$state."')
-                WHERE activity_id = '".$activity_id."'";
+    $score_query1_result = mysqli_fetch_all(mysqli_query($conn, $score_query1), MYSQLI_ASSOC)[0]['state'];
+    if($score_query1_result != "completed" && $state == "completed") $update_score = true;
+    $query = "UPDATE activity SET name = '".$name."', description = '".$description."', 
+                         category = '".$type."', start = '".$startTime."', 
+                         end = '".$endTime."', state = '".$state."'
+                         WHERE activity_id = '".$activity_id."'";
     mysqli_query($conn, $query);
   } catch (PDOException $ex){
     $_SESSION['task_update_error'] = "true";
@@ -36,24 +49,12 @@ if(!empty($_POST) && isset($_POST)){
     header("location: ../../templates/account.php");
   }
 
-
-  $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
-  foreach($activities as $activity){
-    if(!($activity['start'] > $endTime || $activity['end'] < $startTime)){
-        $_SESSION['task_date_error'] = "true";
-        $_SESSION['task_date_error_text'] = "This date overlaps with another task";
-        header("location: ../../templates/account.php");
-        exit;
-    }
-  }
-
-
   try{
     if($update_score){ //Update the users score if the activity has been completed
       $score_query2 = "SELECT score FROM app_user WHERE user_id = '$user_id'";
-      $score_query2_result = mysqli_fetch_all(mysqli_query($conn, $score_query1), MYSQLI_ASSOC)['score'];
+      $score_query2_result = mysqli_fetch_all(mysqli_query($conn, $score_query1), MYSQLI_ASSOC)[0]['score'];
       $score = $score_query2_result + 1;
-      $query2 = "UPDATE app_user (score) VALUES ('".$score."') WHERE user_id = '".$user_id."'";
+      $query2 = "UPDATE app_user SET score = '".$score."' WHERE user_id = '".$user_id."'";
       mysqli_query($conn, $query2);
     }
   } catch (PDOException $ex){

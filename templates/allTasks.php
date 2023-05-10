@@ -45,6 +45,22 @@
           break;
       }
 
+      $active_text = "";
+      $abandoned_text = "";
+      $complete_text = "";
+
+      switch($row['state']){
+        case "completed":
+            $complete_text = "selected";
+            break;
+        case "abandoned":
+            $abandoned_text = "selected";
+            break;
+        default:
+          $active_text = "selected";
+            break;
+        }
+
       switch($_SESSION['theme']){
           case "light":
               $delete = "deleteblack";
@@ -52,6 +68,7 @@
           default:
               $delete = "deletewhite";
           }
+
       echo 
         "<li class='friends' name='activity' onclick='showPopUp(".$row['activity_id'].")'> 
         <h5>".$row['name']."</h5> 
@@ -85,10 +102,10 @@
               <input type='date' class='textInput' id='endTime' name='endTime' placeholder='name' maxlength='10' required
               maxlength='10' required required pattern = '[0-3][0-9]-[0-1][0-9]-[0-9]{4}' value='".$row['end'] . "'>
               
-              <select class='textInput' id='state' name='state' placeholder='state' maxlength='255' value='".$row['state'] . "' required>
-                  <option value='active'>active</option>
-                  <option value='completed'>completed</option>
-                  <option value='abondoned'>abondoned</option>
+              <select class='textInput' id='state' name='state' placeholder='state' maxlength='255' required>
+                  <option " .$active_text. "  value='active'>active</option>
+                  <option " .$complete_text. "  value='completed'>completed</option>
+                  <option " .$abandoned_text. "  value='abandoned'>abandoned</option>
               </select>
 
               <br><br>

@@ -43,27 +43,28 @@
 
 <script type="text/javascript">
     <?php
+
     //Php check after (update, delete, create, etc) to see which alerts to send:
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_delete_error']){
-        echo("myAlert(\"" . $_SESSION['task_delete_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_delete_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_delete_error_text']."')");
         $_SESSION['task_delete_error'] = "false";
         $_SESSION['task_delete_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_update_error']){
-        echo("myAlert(\"" . $_SESSION['task_update_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_update_error']) && $_SESSION['task_update_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_update_error_text']."')");
         $_SESSION['task_update_error'] = "false";
         $_SESSION['task_update_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_create_error']){
-        echo("myAlert(\"" . $_SESSION['task_create_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_create_error']) && $_SESSION['task_create_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_create_error_text']."')");
         $_SESSION['task_create_error'] = "false";
         $_SESSION['task_create_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_date_error']){
-        echo("myAlert(\"" . $_SESSION['task_date_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_date_error']) && $_SESSION['task_date_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_date_error_text']."')");
         $_SESSION['task_date_error'] = "false";
         $_SESSION['task_date_error_text'] = "";
     }
