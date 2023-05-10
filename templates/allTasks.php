@@ -10,13 +10,48 @@
   else{
     echo "<ul class='taskList, friendList'>";
     while($row = mysqli_fetch_assoc($query)){
-    switch($_SESSION['theme']){
-        case "light":
-            $delete = "deleteBlack";
-            break;
-        default:
-            $delete = "deleteWhite";
-        }
+      $task_text = "";
+      $study_text = "";
+      $exersize_text = "";
+      $social_text = "";
+      $clean_text = "";
+      $eat_text = "";
+      $drink_text = "";
+      $meditate_text = "";
+      switch($row['category']){
+        case "task":
+          $task_text = "selected";
+          break;
+        case "study":
+          $study_text = "selected";
+          break;
+        case "exercise":
+          $exersize_text = "selected";
+          break;
+        case "social":
+          $social_text = "selected";
+          break;
+        case "clean":
+          $clean_text = "selected";
+          break;
+        case "drink":
+          $drink_text = "selected";
+          break;
+        case "eat":
+          $eat_text = "selected";
+          break;
+        case "meditate":
+          $meditate_text = "selected";
+          break;
+      }
+
+      switch($_SESSION['theme']){
+          case "light":
+              $delete = "deleteBlack";
+              break;
+          default:
+              $delete = "deleteWhite";
+          }
       echo 
         "<li class='friends' name='activity' onclick='showPopUp(".$row['activity_id'].")'> 
         <h5>".$row['name']."</h5> 
@@ -34,15 +69,15 @@
               <input type='text' class='textInput' id='name' name='name' placeholder='name' maxlength='20' value=" .$row['name']. " required>
               <input type='text' class='textInput' id='description' name='description' placeholder='name' maxlength='255' value='" .$row['description']. "' required>
 
-              <select class='textInput' id='type' name='type' placeholder='name' maxlength='255' value='" .$row['category']. "' required>
-                  <option value='task'>task</option>
-                  <option value='study'>study</option>
-                  <option value='exercise'>exercise</option>
-                  <option value='social'>social</option>
-                  <option value='clean'>clean</option>
-                  <option value='eat'>eat</option>
-                  <option value='drink'>drink</option>
-                  <option value='meditate'>meditate</option>
+              <select class='textInput' id='type' name='type' placeholder='name' maxlength='255' required>
+                  <option " .$task_text. " value='task'>task</option>
+                  <option " .$study_text. " value='study'>study</option>
+                  <option " .$exersize_text. " value='exercise'>exercise</option>
+                  <option " .$social_text. " value='social'>social</option>
+                  <option " .$clean_text. " value='clean'>clean</option>
+                  <option " .$eat_text. " value='eat'>eat</option>
+                  <option " .$drink_text. " value='drink'>drink</option>
+                  <option " .$meditate_text. " value='meditate'>meditate</option>
               </select> 
 
               <input type='date' class='textInput' id='startTime' name='startTime' placeholder='name' maxlength='10' required

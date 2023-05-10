@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+$_SESSION['task_create_error'] = "false";
+$_SESSION['task_create_error_text'] = "";
+
+$_SESSION['task_date_error'] = "false";
+$_SESSION['task_date_error_text'] = "";
+
 if(!empty($_POST) && isset($_POST)){
   $name = htmlspecialchars($_POST["name"]);
   $description = htmlspecialchars(trim($_POST["description"]));
@@ -14,8 +20,17 @@ if(!empty($_POST) && isset($_POST)){
 
   $conn = connect();
 
-  $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."'";
-  $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
+  try{
+    $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."'";
+    $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
+  } 
+  catch (PDOException $ex){
+    $_SESSION['task_create_error'] = "true";
+    $_SESSION['task_create_error_text'] = "could not create task: MySQL error: " . $ex->getMessage();
+    header("location: ../../templates/account.php");
+    exit;
+  }
+
   foreach($activities as $activity){
     if(!($activity['start'] > $endTime || $activity['end'] < $startTime)){
         $_SESSION['task_date_error'] = "true";
@@ -25,11 +40,17 @@ if(!empty($_POST) && isset($_POST)){
     }
   }
   
-  $query = "INSERT INTO activity (user_id, name, description, category, start, end, state) VALUES ('".$user_id."', '".$name."', '".$description."', '".$type."', '".$startTime."', '".$endTime."', 'active')";
-  mysqli_query($conn, $query);
+  try{
+    $query = "INSERT INTO activity (user_id, name, description, category, start, end, state) VALUES ('".$user_id."', '".$name."', '".$description."', '".$type."', '".$startTime."', '".$endTime."', 'active')";
+    mysqli_query($conn, $query);
+  } 
+  catch (PDOException $ex){
+    $_SESSION['task_create_error'] = "true";
+    $_SESSION['task_create_error_text'] = "could not create task: MySQL error: " . $ex->getMessage();
+  }
+
+
   disconnect($conn);
-  $_SESSION['task_date_error'] = "false";
-  $_SESSION['open_task_form'] = false;
   header("location: ../../templates/account.php");
   exit;
 } else{

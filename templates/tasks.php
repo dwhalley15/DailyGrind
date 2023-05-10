@@ -1,28 +1,11 @@
-<?php
-    if(!isset($_SESSION["task_date_error"])){
-        $_SESSION["task_date_error"] = "false";
-    }
-
-    if(!isset($_SESSION["task_date_error_text"])){
-        $_SESSION["task_date_error_text"] = "";
-    }
-
-    if(!isset($_SESSION['open_task_form'])){
-        $_SESSION['open_task_form'] = false;
-    }
-
-    $task_date_error = $_SESSION["task_date_error"] ?: "false";
-    $task_date_error_text = $_SESSION["task_date_error_text"];
-?>
-
-<div class="container, navbar">
+<div id="task_container" class="container, navbar">
     <div class="container" id="buttons_container">
-        <input type="button" class="btn, navItem" id="new_task" value="New Task">
-        <input type="button" class="btn, navItem" value="Default">
-        <input type="button" class="btn, navItem" value="Default">
+        <input type="button" class="btn, navItem" id="new_task" value="New Task" onclick="toggleFromContainer()">
+        <input type="button" class="btn, navItem" id="task_list" value="Tasks" onclick="toggleTaskContainer()">
+        <input type="button" class="btn, navItem" id="task_leaderboard" value="Leaderboard" onclick="toggleLeaderBoard()">
     </div>
 
-    <div class="container" <?php if(isset($_SESSION['open_task_form']) && !$_SESSION['open_task_form']) echo ", hiddenTab"; ?> id="newTaskFromContainer">
+    <div class="container" id="newTaskFromContainer">
         <form name="taskCreationForm" id="taskCreationForm" action="<?php echo htmlspecialchars("../scripts/php/createNewTaskScript.php"); ?>" method="post">
             <input type="text" class="textInput" id="name" name="name" placeholder="name" maxlength="20" required>
             <input type="text" class="textInput" id="description" name="description" placeholder="name" maxlength="255" required>
@@ -47,19 +30,122 @@
         </form>
     </div>
 
-    <div class="container <?php if(!isset($_SESSION['open_task_form']) || $_SESSION['open_task_form']) echo ", hiddenTab"; ?>" id="taskListContainer">
+    <div class="container, hiddenTab" id="taskListContainer">
         <?php include "allTasks.php" ?>
     </div>
 
-    <div class="container hiddenTab", id="friendsLeaderBoard">
-        <?php //Run php include to create the leaderboard ?>
+    <div class="container, hiddenTab" id="friendsLeaderBoard">
+        <h3>Tasks Leaderboard</h3>
+        <?php include "../scripts/php/loadLeaderBoard.php" ?>
     </div>
 </div>
 
+
+<script type="text/javascript">
+    <?php
+    //Php check after (update, delete, create, etc) to see which alerts to send:
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_delete_error']){
+        echo("myAlert(\"" . $_SESSION['task_delete_error_text']?: "unknown error" . "\")");
+        $_SESSION['task_delete_error'] = "false";
+        $_SESSION['task_delete_error_text'] = "";
+    }
+
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_update_error']){
+        echo("myAlert(\"" . $_SESSION['task_update_error_text']?: "unknown error" . "\")");
+        $_SESSION['task_update_error'] = "false";
+        $_SESSION['task_update_error_text'] = "";
+    }
+
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_create_error']){
+        echo("myAlert(\"" . $_SESSION['task_create_error_text']?: "unknown error" . "\")");
+        $_SESSION['task_create_error'] = "false";
+        $_SESSION['task_create_error_text'] = "";
+    }
+
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_date_error']){
+        echo("myAlert(\"" . $_SESSION['task_date_error_text']?: "unknown error" . "\")");
+        $_SESSION['task_date_error'] = "false";
+        $_SESSION['task_date_error_text'] = "";
+    }
+    ?>
+
+
+    function myAlert(alert_text){
+        var buf = Math.random() * 111;
+
+        var alertBox = document.createElement("div");
+        alertBox.classList.add("popup");
+        alertBox.classList.add("container");
+        alertBox.classList.add("show");
+        alertBox.id = "alertBox" + buf;
+
+        var alertBoxContainer = document.createElement("div");
+        alertBoxContainer.classList.add("popup-content")
+        alertBox.appendChild(alertBoxContainer);
+
+        var alertText = document.createElement("h3");
+        alertText.textContent = alert_text;
+
+        var removeAlertButton = document.createElement("button");
+        removeAlertButton.classList.add("btn");
+        removeAlertButton.classList.add("navItem");
+        removeAlertButton.innerText = "Close Alert";
+        removeAlertButton.onclick = function() {
+            let alertBoxRemv = document.getElementById(alertBox.id);
+            alertBoxRemv.classList.remove("show");
+            document.getElementById(alertBox.id).parentElement.removeChild(alertBoxRemv);
+        }
+
+        alertBoxContainer.appendChild(alertText);
+        alertBoxContainer.appendChild(removeAlertButton);
+        document.body.appendChild(alertBox);
+
+        try{
+            document.getElementById("task_container").appendChild(alertBox);
+        }catch(e){
+            console.log("Failed to insert");
+        }
+    }
+
+
+    //Let users know when the task is about to end:
+    function checkTaskEnd(){
+        const tasks = document.getElementsByClassName("task");
+        console.log(tasks);
+        Array.from(tasks).forEach(task => {
+            if(Date(task.elements["endTime"]) == Date()){
+                myAlert("Task: " + task.elements["name"]["value"] + " This task is about to end!");
+                console.log("TaskTypes1");
+            }
+        });
+    }
+
+
+    //Let users know which tasks they are missing:
+    function checkTaskTypes(){
+        var task_found = false;
+        const tasks = document.getElementsByClassName("task");
+        var taskList = ["task", "study", "exercise", "social", "clean", "eat", "drink", "meditate"];
+        var myTaskList = [];
+        Array.from(tasks).forEach(task => {myTaskList.push(task.elements["type"])});
+        for(task in taskList){
+            if(!myTaskList.includes(task) && !task_found){
+                myAlert("You have no tasks of type: " + taskList[task] + ". Perhaps try adding one")
+                task_found = true;
+                console.log("TaskTypes2");
+            }
+        }
+    }
+
+    
+    //Event listeners:
+    document.addEventListener('DOMContentLoaded', checkTaskEnd);
+    document.addEventListener('DOMContentLoaded', checkTaskTypes);
+</script>
+
+
 <script type="text/javascript" defer>
     //Getting the html elements by reference:
-    const task_date_error = JSON.parse('<?php echo $task_date_error;?>');
-    const task_date_error_text = '<?php echo $task_date_error_text;?>';
     const createTaskButton = document.getElementById('new_task');
     const formContainer = document.getElementById('newTaskFromContainer');
     const taskContainer = document.getElementById('taskListContainer');
@@ -68,16 +154,7 @@
     const submitTaskFormButton = document.getElementById('newTask');
     const activityPopUps = document.getElementsByClassName("activityPopUp");
     const activities = document.getElementsByName("activity");
-
-
-
-    //Let users know when the task is about to end:
-    const tasks = document.getElementsByClassName("task");
-    tasks.forEach(task => {
-        if(Date(task.elements["endTime"]) == Date()){
-            alert("Task:" + task.elements["endTime"] + " This task is about to end!");
-        }
-    });
+    const taskLeaderboard = document.getElementById('friendsLeaderBoard');
 
 
     //Event listeners:
@@ -85,19 +162,8 @@
     document.addEventListener('DOMContentLoaded', toggleHidden);
 
 
-    //Global variables:
-    var createTaskClicked = false;
-
-
     //Functions
-    function onLoadDateError(){
-        if(task_date_error){
-            alert(task_date_error);
-            return;
-        }
-    }
-
-
+    
     //Activity PopUp section:
     function showPopUp(activity_id){
         const curActivityPopUp = document.getElementById(activity_id);
@@ -109,17 +175,24 @@
         curActivityPopUp.classList.remove("show");
     }
 
+    function toggleLeaderBoard(){
+        formContainer.classList.add('hiddenTab');
+        taskContainer.classList.add('hiddenTab');
+        taskLeaderboard.classList.remove('hiddenTab');
+    }
 
-    function toggleHidden() {
-        if(createTaskClicked){
-            formContainer.classList.add('hiddenTab');
-            taskContainer.classList.remove('hiddenTab');
-            createTaskClicked = false;
-        } else {
-            formContainer.classList.remove('hiddenTab');
-            taskContainer.classList.add('hiddenTab');
-            createTaskClicked = true;
-        }
+
+    function toggleTaskContainer(){
+        formContainer.classList.add('hiddenTab');
+        taskContainer.classList.remove('hiddenTab');
+        taskLeaderboard.classList.add('hiddenTab');
+    }
+
+
+    function toggleFromContainer(){
+        formContainer.classList.remove('hiddenTab');
+        taskContainer.classList.add('hiddenTab');
+        taskLeaderboard.classList.add('hiddenTab');
     }
 
 
@@ -150,19 +223,19 @@
             }
 
             if (yyyy != 2023){
-                alert(yyyy + ": is not the current year");
+                myAlert(yyyy + ": is not the current year");
                 correctDate = false;
             } else if (mm > 13 || mm < 1){
-                alert(mm + ": is not a correct month");
+                myAlert(mm + ": is not a correct month");
                 correctDate = false;
             } else if (dd < 1 || dd > mm_days_list[mm-1]){
-                alert(dd + ": There are this many days in month: " + mm);
+                myAlert(dd + ": There are this many days in month: " + mm);
                 correctDate = false;
             }
             return correctDate;
         }
         else {
-            alert("Please put the date in the correct format")
+            myAlert("Please put the date in the correct format")
             return false;
         }
     }
@@ -179,7 +252,7 @@
             };
         });
 
-        if(isNull) alert("All fields need to be filled out");
+        if(isNull) myAlert("All fields need to be filled out");
         return isNull;
     }
 
@@ -197,7 +270,7 @@
         const text_special_chars_check = /^[A-Za-z0-9]*$/;
         is_text = text_special_chars_check.test(nameInput.value.replace(/\s/g, ''));
         if(!is_text){
-            alert("The name field can only have text in it!")
+            myAlert("The name field can only have text in it!")
             return false
         }
 
@@ -208,7 +281,7 @@
         const date_validation1 = dateValidation(startDateInput);
         const date_validation2 = dateValidation(endDateInput);
         if(!date_validation1 || !date_validation2) {
-            alert("Invalid date");
+            myAlert("Invalid date");
             return;
         }
 
@@ -216,12 +289,12 @@
         var date2 = new Date(endDateInput.value);
 
         if(date1 < new Date()){
-            alert("The start can't be before today");
+            myAlert("The start can't be before today");
             return
         }
 
         if(date2 < date1){
-            alert("The start date must come before the end date");
+            myAlert("The start date must come before the end date");
             return
         }
 
@@ -261,12 +334,3 @@
         color: green;
     }
 </style>
-
-
-<?php
-    /*
-    SELECT friend_list.user_id_rec, app_user.full_name, app_user.score FROM friend_list 
-    JOIN app_user ON friend_list.user_id_rec = app_user.user_id 
-    WHERE accepted = 'true' AND user_id_req = 1;
-    */
-?>
