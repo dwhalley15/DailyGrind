@@ -109,12 +109,38 @@
     }
 
 
+    function dateToString(){
+        let date = Date().toString().split(" ");
+        stringDateToDigit = [{
+            "January": "01",
+            "Febuary": "02",
+            "March": "03",
+            "April": "04",
+            "May": "05",
+            "June": "06",
+            "July": "07",
+            "August": "08",
+            "September": "09",
+            "October": "10",
+            "November": "11",
+            "December": "12"}
+        ];
+        let month = stringDateToDigit[0][date[1]];
+        let year = date[3];
+        let day = date[2];
+        let date_date = year + "-" + month + "-" + day;
+        console.log(date_date);
+        return date_date
+    }
+
+
     //Let users know when the task is about to end:
     function checkTaskEnd(){
         const tasks = document.getElementsByClassName("task");
         console.log(tasks);
         Array.from(tasks).forEach(task => {
-            if(Date(task.elements["endTime"]) == Date()){
+            console.log(task.elements["endTime"].value);
+            if(task.elements["endTime"].value == dateToString()){
                 myAlert("Task: " + task.elements["name"]["value"] + " This task is about to end!");
                 console.log("TaskTypes1");
             }
@@ -288,13 +314,14 @@
 
         var date1 = new Date(startDateInput.value);
         var date2 = new Date(endDateInput.value);
+        console.log(date1.toDateString(), date2.toDateString());
 
-        if(date1 < new Date()){
+        if(date1.toDateString() < (new Date()).toDateString()){
             myAlert("The start can't be before today");
             return
         }
 
-        if(date2 < date1){
+        if(date2.toDateString() < date1.toDateString()){
             myAlert("The start date must come before the end date");
             return
         }
