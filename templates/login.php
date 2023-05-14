@@ -1,7 +1,7 @@
 <?php
   session_start();
   if(isset($_SESSION['dglogin']) && $_SESSION['dglogin'] === true){
-    header("location: account.php?signedUp=true");
+    header("location: account.php");
     exit;
   }
   if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -28,7 +28,7 @@
         $_SESSION['name'] = $account['full_name'];
         $_SESSION['status'] = $account['status'];
         $_SESSION['theme'] = $account['theme'];
-        header("location: account.php?signedUp=true");
+        header("location: account.php");
       }
     }
     include "header.php";

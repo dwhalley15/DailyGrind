@@ -22,8 +22,11 @@
 </div>
 
 <?php
-  if(isset($_GET['signedUp']) && $_GET['signedUp'] == 'true'){
-    include "user_guide.php";
+  if(isset($_SESSION['signedUp']) && !$_SESSION['signedUp'] == 'true'){
+    if(isset($_GET['signedUp']) && $_GET['signedUp'] == 'true'){
+      include "user_guide.php";
+      $_SESSION['signedUp'] = true;
+    }
   }
 ?>
 
