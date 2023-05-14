@@ -21,6 +21,12 @@
   </div>
 </div>
 
+<?php
+  if(isset($_GET['signedUp']) && $_GET['signedUp'] == 'true'){
+    include "user_guide.php";
+  }
+?>
+
 <div class="visibleTab" id="tasksTab">
   <?php include "tasks.php" ?>
 </div>
