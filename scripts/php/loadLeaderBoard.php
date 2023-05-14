@@ -16,13 +16,19 @@ $query2 = "SELECT * FROM app_user WHERE user_id = $user_id";
 $user_info = mysqli_fetch_all(mysqli_query($conn, $query2), MYSQLI_ASSOC);
 
 
-$delete = "";
+$avatar = "";
 switch($_SESSION['theme']){
     case "light":
-        $delete = "avatarwhite";
+        $avatar = "avatarblack";
         break;
+    case "blue":
+        $avatar = "avatarblack";
+        break;
+    case "pale":
+        $avatar = "avatarpale";
+        break;    
     default:
-        $delete = "avatarblack";
+        $avatar = "avatarwhite";
 }
 
 
@@ -31,7 +37,7 @@ while($element = mysqli_fetch_assoc($leaderBoardElements)){
     if($element['score'] <= $user_info[0]['score'] && $user_loaded = false){
         echo "<li class='friends2' name='friendLeaderBoard'> 
                 <h5>".$user_info[0]['full_name']." |  score: ".$user_info[0]['score']."</h5> 
-                <img class='smallAvatar' src='../images/$delete.png'>
+                <img class='smallAvatar' src='../images/$avatar.png'>
                 </li>";
         $user_loaded = true;
     }

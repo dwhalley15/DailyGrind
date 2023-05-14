@@ -15,11 +15,15 @@
          <option class='options' value='light' ";if($account['theme'] == "light") echo "selected";  echo ">Light Mode</option>
          <option class='options' value='retro' ";if($account['theme'] == "retro") echo "selected";  echo ">Retro Theme</option>
          <option class='options' value='forest' ";if($account['theme'] == "forest") echo "selected";  echo ">Forest Theme</option>
+         <option class='options' value='blue' ";if($account['theme'] == "blue") echo "selected";  echo ">Ocean Mode</option>
+         <option class='options' value='pale' ";if($account['theme'] == "pale") echo "selected";  echo ">Pantone Mode</option>
         ";}
       else{
         echo "
          <option class='options' value='default' ";if($account['theme'] == "default") echo "selected";  echo ">Dark Mode</option>
          <option class='options' value='light' ";if($account['theme'] == "light") echo "selected";  echo ">Light Mode</option>
+         <option class='options' value='blue' ";if($account['theme'] == "blue") echo "selected";  echo ">Ocean Mode</option>
+         <option class='options' value='pale' ";if($account['theme'] == "pale") echo "selected";  echo ">Pantone Mode</option>
         ";
       }
   ?></select> 

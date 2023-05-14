@@ -1,11 +1,11 @@
 body{
-  background-color: #212121;
-  color: #FAF9F6;
+  background-color: #ffcc66;
+  color: #212121;
   font-family: Rockwell Extra Bold;
 }
 
 #dailyGrindLogo{
-  background-image: url("../images/dailygrindlogowhite.png");
+  background-image: url("../images/dailygrindlogopale.png");
   width: 440px;
   height: 440px;
   background-repeat: no-repeat;
@@ -14,7 +14,7 @@ body{
 }
 
 #loginIcon{
-  background-image: url("../images/loginwhite.png");
+  background-image: url("../images/loginpale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -22,7 +22,7 @@ body{
 }
 
 #signupIcon{
-  background-image: url("../images/signupwhite.png");
+  background-image: url("../images/signuppale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -30,7 +30,7 @@ body{
 }
 
 #updateIcon{
-  background-image: url("../images/updatewhite.png");
+  background-image: url("../images/updatepale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -38,7 +38,7 @@ body{
 }
 
 #passwordIcon{
-  background-image: url("../images/passwordwhite.png");
+  background-image: url("../images/passwordpale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -46,7 +46,7 @@ body{
 }
 
 #deleteIcon{
-  background-image: url("../images/deletewhite.png");
+  background-image: url("../images/deletepale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -54,7 +54,7 @@ body{
 }
 
 #deleteIconSmall{
-  background-image: url("../images/deletewhite.png");
+  background-image: url("../images/deletepale.png");
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
@@ -62,7 +62,7 @@ body{
 }
 
 #yesIcon{
-  background-image: url("../images/yeswhite.png");
+  background-image: url("../images/yespale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -70,7 +70,7 @@ body{
 }
 
 #yesIconSmall{
-  background-image: url("../images/yeswhite.png");
+  background-image: url("../images/yespale.png");
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
@@ -78,7 +78,7 @@ body{
 }
 
 #noIcon{
-  background-image: url("../images/nowhite.png");
+  background-image: url("../images/nopale.png");
   width: 72px;
   height: 72px;
   background-repeat: no-repeat;
@@ -86,7 +86,7 @@ body{
 }
 
 #noIconSmall{
-  background-image: url("../images/nowhite.png");
+  background-image: url("../images/nopale.png");
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
@@ -94,7 +94,7 @@ body{
 }
 
 #addFriendIcon{
-  background-image: url("../images/addfriendwhite.png");
+  background-image: url("../images/addfriendpale.png");
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
@@ -102,7 +102,7 @@ body{
 }
 
 #dailyGrindWords{
-  background-image: url("../images/dailygrindwordswhite.png");
+  background-image: url("../images/dailygrindwordspale.png");
   width: 440px;
   height: 140px;
   display: block;
@@ -111,7 +111,7 @@ body{
 }
 
 #avatar{
-  background-image: url("../images/avatarwhite.png");
+  background-image: url("../images/avatarpale.png");
   width: 440px;
   height: 140px;
   display: block;
@@ -121,16 +121,16 @@ body{
 
 .active{
   opacity: 1 !important;
-  border-bottom: 1px solid #FAF9F6;
+  border-bottom: 1px solid #ac7339;
 }
 
 .navItem{
-  color: #FAF9F6;
+  color: #ac7339;
   opacity: 0.5;
 }
 
 .textInput{
-  border: 1px solid #212121;
+  border: 1px solid #ac7339;
 }
 
 .popup {
@@ -146,10 +146,10 @@ body{
 }
 
 .popup-content {
-  background-color: white;
+  background-color: #ffcc66;
   margin: 10% auto;
   padding: 20px;
-  border: 1px solid #212121;
+  border: 1px solid #ac7339;
   width: 30%;
   font-weight: bolder;
 }
@@ -162,4 +162,3 @@ body{
 .show {
   display: block;
 }
-

@@ -13,12 +13,18 @@
   else{
     echo "<ol class='friendInvitesList'>";
     while($row = mysqli_fetch_assoc($query)){
-      switch($row['theme']){
+      switch($_SESSION['theme']){
         case "light":
-          $avatar = "avatarblack";
-          break;
+            $avatar = "avatarblack";
+            break;
+        case "blue":
+            $avatar = "avatarblue";
+            break;
+        case "pale":
+            $avatar = "avatarpale";
+            break;    
         default:
-          $avatar = "avatarwhite";
+            $avatar = "avatarwhite";
       }
       echo 
         "<li class='potentialFriends'>

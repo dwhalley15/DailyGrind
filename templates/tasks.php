@@ -35,7 +35,6 @@
     </div>
 
     <div class="container, hiddenTab" id="friendsLeaderBoard">
-        <h3>Tasks Leaderboard</h3>
         <?php include "../scripts/php/loadLeaderBoard.php" ?>
     </div>
 </div>
@@ -318,47 +317,14 @@
 
         if(date1.toDateString() < (new Date()).toDateString()){
             myAlert("The start can't be before today");
-            return
+            return;
         }
 
         if(date2.toDateString() < date1.toDateString()){
             myAlert("The start date must come before the end date");
-            return
+            return;
         }
 
         document.forms[formID].submit();
     }
 </script>
-
-
-<style>
-    .popup {
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: none;
-    }
-    .popup-content {
-        background-color: white;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888888;
-        width: 30%;
-        font-weight: bolder;
-    }
-    .popup-content button {
-        display: block;
-        margin: 0 auto;
-    }
-    .show {
-        display: block;
-    }
-    h1 {
-        color: green;
-    }
-</style>

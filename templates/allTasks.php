@@ -65,9 +65,15 @@
           case "light":
               $delete = "deleteblack";
               break;
+          case "blue":
+              $delete = "deleteblue";
+              break;
+          case "pale":
+              $delete = "deletepale";
+              break;    
           default:
               $delete = "deletewhite";
-          }
+      }
 
       echo 
         "<li class='friends' name='activity' onclick='showPopUp(".$row['activity_id'].")'> 
