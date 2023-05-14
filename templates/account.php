@@ -43,5 +43,3 @@
 </div>
 
 <script src="../scripts/js/account.js"></script>
-
-</body>
