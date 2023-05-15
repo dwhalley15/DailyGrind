@@ -86,7 +86,8 @@
       echo
         "<div class='container, popup' id='".$row['activity_id']."'>
           <div class='popup-content'>
-            <button id='myButton' onclick='removePopUp(".$row['activity_id'].")'>Click me</button>
+            <button class='pageButton' onclick='removePopUp(".$row['activity_id'].")'>Click me</button>
+            <br><br>
             <form class='task' name='tastCreationForm' id='form_".$row['activity_id']."' method='post' action='../scripts/php/updateActivity.php'>
               <input type='text' class='textInput' id='activity_id' name='activity_id' value='" .$row['activity_id']. "' hidden>
               <input type='text' class='textInput' id='name' name='name' placeholder='name' maxlength='20' value=" .$row['name']. " required>
@@ -115,7 +116,8 @@
               </select>
 
               <br><br>
-              <input onclick='submitTaskForm(\"form_".$row['activity_id']."\")' type='button' class='btn, navItem' id='update_task' value='Update'>
+              <input onclick='submitTaskForm(\"form_".$row['activity_id']."\")' type='button' class='formInputButton, pageButton' id='update_task' value='Update'>
+              <br><br>
             </form>
           </div>
         </div>";

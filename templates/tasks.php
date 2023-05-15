@@ -26,7 +26,7 @@
             <input type="date" class="textInput" id="endTime" name="endTime" placeholder="name" maxlength="10" required
             maxlength="10" required required pattern = "[0-3][0-9]-[0-1][0-9]-[0-9]{4}">
             <br><br>
-            <input onclick='submitTaskForm("taskCreationForm")' type="button" class="btn, navItem" id="newTask" value="Submit">
+            <input onclick='submitTaskForm("taskCreationForm")' type="button" class="formInputButton, pageButton" id="newTask" value="Submit">
         </form>
     </div>
 
@@ -88,7 +88,7 @@
 
         var removeAlertButton = document.createElement("button");
         removeAlertButton.classList.add("btn");
-        removeAlertButton.classList.add("navItem");
+        removeAlertButton.classList.add("pageButton");
         removeAlertButton.innerText = "Close Alert";
         removeAlertButton.onclick = function() {
             let alertBoxRemv = document.getElementById(alertBox.id);
@@ -284,6 +284,7 @@
 
     
     function submitTaskForm(formID = "newTaskFromContainer"){
+        console.log("submitTaskForm");
         var forms = document.getElementById(formID);
         var formInputs = forms.querySelectorAll('input[type="text"], input[type="date"], select');
 
@@ -325,6 +326,6 @@
             return;
         }
 
-        document.forms[formID].submit();
+        //document.forms[formID].submit();
     }
 </script>

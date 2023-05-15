@@ -145,13 +145,19 @@ body{
   display: none;
 }
 
+.pageButton{
+  color: blue;
+}
+
 .popup-content {
   background-color: lightblue;
   margin: 10% auto;
   padding: 20px;
   border: 1px solid blue;
-  width: 30%;
+  width: 70%;
   font-weight: bolder;
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-content button {

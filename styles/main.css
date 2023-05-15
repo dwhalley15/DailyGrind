@@ -70,6 +70,18 @@ input:focus{
   background: none;
 }
 
+
+.pageButton{
+  float: left;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  background: none;
+}
+
+
 .friendInvitesList{
   display: flex;
   flex-direction: column;
@@ -188,4 +200,11 @@ select{
 .popup-content{
   color: black;
   font-family: read-write-plaintext-only;
+}
+
+form input[type="button"]{
+  width: 80%;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  margin-left: 5%;
 }
