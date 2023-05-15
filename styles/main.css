@@ -3,6 +3,11 @@
   justify-content: space-evenly;
 }
 
+.checkboxContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 a{
   border: none;
   all: unset;

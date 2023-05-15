@@ -326,6 +326,6 @@
             return;
         }
 
-        //document.forms[formID].submit();
+        document.forms[formID].submit();
     }
 </script>

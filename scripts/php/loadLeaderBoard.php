@@ -43,14 +43,14 @@ while($element = mysqli_fetch_assoc($leaderBoardElements)){
     }
     echo "<li class='friends3' name='friendLeaderBoard'> 
         <h5>".$element['full_name']." |  score: ".$element['score']."</h5>
-        <img class='smallAvatar' src='../images/$delete.png'>
+        <img class='smallAvatar' src='../images/deleteblack.png'>
         </li>";
 }
 
 if(!$user_loaded){
     echo "<li class='friends2' name='friendLeaderBoard'> 
           <h5>".$user_info[0]['full_name']." |  score: ".$user_info[0]['score']."</h5> 
-          <img class='smallAvatar' src='../images/$delete.png'>
+          <img class='smallAvatar' src='../images/deleteblack.png'>
           </li>";
 }
 ?>

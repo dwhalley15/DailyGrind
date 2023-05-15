@@ -21,7 +21,7 @@ if(!empty($_POST) && isset($_POST)){
   $conn = connect();
 
   try{
-    $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."'";
+    $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."' AND state = 'active'";
     $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
   } 
   catch (PDOException $ex){

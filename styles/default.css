@@ -169,3 +169,8 @@ body{
   display: block;
 }
 
+
+.checkboxContainer{
+  display: flex;
+  flex-direction: row;
+}

@@ -14,14 +14,16 @@ if(!empty($_POST) && isset($_POST)){
   $type = htmlspecialchars(trim($_POST["type"]));
   $startTime = htmlspecialchars(trim($_POST["startTime"]));
   $endTime = htmlspecialchars(trim($_POST["endTime"]));
-  $state = htmlspecialchars(trim($_POST["state"]));
   $user_id = $_SESSION['user_id'];
+
+  $state = 'active';
+  if(isset($_POST["completedCheckbox"])) $state = htmlspecialchars(trim($_POST["completedCheckbox"]));
   
   include '../../resources/database.php';
 
   $conn = connect();
 
-  $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."'";
+  $checkTimesQuery = "SELECT activity_id, start, end FROM activity WHERE user_id = '".$user_id."' AND state = 'active'";
   $activities = mysqli_fetch_all(mysqli_query($conn, $checkTimesQuery), MYSQLI_ASSOC);
   foreach($activities as $activity){
     if(!($activity['start'] > $endTime || $activity['end'] < $startTime) && !($activity['activity_id'] == $activity_id)){

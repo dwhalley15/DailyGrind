@@ -1,9 +1,20 @@
 <?php
+  //Script to update the tasks to set tasks that have gone past their end-date to abandoned:
+  $date = date('Y-m-d');
+  $user_id = $_SESSION['user_id'];
+  $query = mysqli_query($conn, 
+            "UPDATE activity
+            SET state = 'abandoned'
+            WHERE user_id = $user_id AND end < '$date'");
+?>
+
+
+<?php
   $user_id = $_SESSION['user_id'];
   $query = mysqli_query($conn, 
             "SELECT *
             FROM activity
-            WHERE user_id = $user_id");
+            WHERE user_id = $user_id AND state = 'active'");
   if(mysqli_num_rows($query) == 0){
     echo "<p>You currently have no activities.</p>";
   }
@@ -44,22 +55,6 @@
           $meditate_text = "selected";
           break;
       }
-
-      $active_text = "";
-      $abandoned_text = "";
-      $complete_text = "";
-
-      switch($row['state']){
-        case "completed":
-            $complete_text = "selected";
-            break;
-        case "abandoned":
-            $abandoned_text = "selected";
-            break;
-        default:
-          $active_text = "selected";
-            break;
-        }
 
       switch($_SESSION['theme']){
           case "light":
@@ -102,18 +97,18 @@
                   <option " .$eat_text. " value='eat'>eat</option>
                   <option " .$drink_text. " value='drink'>drink</option>
                   <option " .$meditate_text. " value='meditate'>meditate</option>
-              </select> 
+              </select>
 
               <input type='date' class='textInput' id='startTime' name='startTime' placeholder='name' maxlength='10' required
               maxlength='10' required required pattern = '[0-3][0-9]-[0-1][0-9]-[0-9]{4}' value='".$row['start'] . "'>
               <input type='date' class='textInput' id='endTime' name='endTime' placeholder='name' maxlength='10' required
               maxlength='10' required required pattern = '[0-3][0-9]-[0-1][0-9]-[0-9]{4}' value='".$row['end'] . "'>
               
-              <select class='textInput' id='state' name='state' placeholder='state' maxlength='255' required>
-                  <option " .$active_text. "  value='active'>active</option>
-                  <option " .$complete_text. "  value='completed'>completed</option>
-                  <option " .$abandoned_text. "  value='abandoned'>abandoned</option>
-              </select>
+              <br><br>
+              <div class='checkboxContainer'>
+                <label for='completedCheckbox'>Completed CheckBox</label><br>
+                <input type='checkbox' id='completedCheckbox' name='completedCheckbox' value='Completed'>
+              </div>
 
               <br><br>
               <input onclick='submitTaskForm(\"form_".$row['activity_id']."\")' type='button' class='formInputButton, pageButton' id='update_task' value='Update'>
