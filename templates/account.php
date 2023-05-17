@@ -21,6 +21,15 @@
   </div>
 </div>
 
+<?php
+  if(isset($_SESSION['signedUp']) && !$_SESSION['signedUp'] == 'true'){
+    if(isset($_GET['signedUp']) && $_GET['signedUp'] == 'true'){
+      include "user_guide.php";
+      $_SESSION['signedUp'] = true;
+    }
+  }
+?>
+
 <div class="visibleTab" id="tasksTab">
   <?php include "tasks.php" ?>
 </div>
@@ -34,5 +43,3 @@
 </div>
 
 <script src="../scripts/js/account.js"></script>
-
-</body>

@@ -1,9 +1,20 @@
 <?php
+  //Script to update the tasks to set tasks that have gone past their end-date to abandoned:
+  $date = date('Y-m-d');
+  $user_id = $_SESSION['user_id'];
+  $query = mysqli_query($conn, 
+            "UPDATE activity
+            SET state = 'abandoned'
+            WHERE user_id = $user_id AND end < '$date'");
+?>
+
+
+<?php
   $user_id = $_SESSION['user_id'];
   $query = mysqli_query($conn, 
             "SELECT *
             FROM activity
-            WHERE user_id = $user_id");
+            WHERE user_id = $user_id AND state = 'active'");
   if(mysqli_num_rows($query) == 0){
     echo "<p>You currently have no activities.</p>";
   }
@@ -47,11 +58,18 @@
 
       switch($_SESSION['theme']){
           case "light":
-              $delete = "deleteBlack";
+              $delete = "deleteblack";
               break;
+          case "blue":
+              $delete = "deleteblue";
+              break;
+          case "pale":
+              $delete = "deletepale";
+              break;    
           default:
-              $delete = "deleteWhite";
-          }
+              $delete = "deletewhite";
+      }
+
       echo 
         "<li class='friends' name='activity' onclick='showPopUp(".$row['activity_id'].")'> 
         <h5>".$row['name']."</h5> 
@@ -63,8 +81,9 @@
       echo
         "<div class='container, popup' id='".$row['activity_id']."'>
           <div class='popup-content'>
-            <button id='myButton' onclick='removePopUp(".$row['activity_id'].")'>Click me</button>
-            <form class='task' name='tastCreationForm' id='form_".$row['activity_id']."' method='post' action=<?php echo htmlspecialchars('../scripts/php/updateActivity.php'); ?>
+            <button class='pageButton' onclick='removePopUp(".$row['activity_id'].")'>Click me</button>
+            <br><br>
+            <form class='task' name='tastCreationForm' id='form_".$row['activity_id']."' method='post' action='../scripts/php/updateActivity.php'>
               <input type='text' class='textInput' id='activity_id' name='activity_id' value='" .$row['activity_id']. "' hidden>
               <input type='text' class='textInput' id='name' name='name' placeholder='name' maxlength='20' value=" .$row['name']. " required>
               <input type='text' class='textInput' id='description' name='description' placeholder='name' maxlength='255' value='" .$row['description']. "' required>
@@ -78,21 +97,22 @@
                   <option " .$eat_text. " value='eat'>eat</option>
                   <option " .$drink_text. " value='drink'>drink</option>
                   <option " .$meditate_text. " value='meditate'>meditate</option>
-              </select> 
+              </select>
 
               <input type='date' class='textInput' id='startTime' name='startTime' placeholder='name' maxlength='10' required
               maxlength='10' required required pattern = '[0-3][0-9]-[0-1][0-9]-[0-9]{4}' value='".$row['start'] . "'>
               <input type='date' class='textInput' id='endTime' name='endTime' placeholder='name' maxlength='10' required
               maxlength='10' required required pattern = '[0-3][0-9]-[0-1][0-9]-[0-9]{4}' value='".$row['end'] . "'>
               
-              <select class='textInput' id='state' name='state' placeholder='state' maxlength='255' value='".$row['state'] . "' required>
-                  <option value='active'>active</option>
-                  <option value='completed'>completed</option>
-                  <option value='abondoned'>abondoned</option>
-              </select>
+              <br><br>
+              <div class='checkboxContainer'>
+                <label for='completedCheckbox'>Completed CheckBox</label><br>
+                <input type='checkbox' id='completedCheckbox' name='completedCheckbox' value='Completed'>
+              </div>
 
               <br><br>
-              <input onclick='submitTaskForm(\"form_".$row['activity_id']."\")' type='button' class='btn, navItem' id='update_task' value='Update'>
+              <input onclick='submitTaskForm(\"form_".$row['activity_id']."\")' type='button' class='formInputButton, pageButton' id='update_task' value='Update'>
+              <br><br>
             </form>
           </div>
         </div>";

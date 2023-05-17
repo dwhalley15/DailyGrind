@@ -1,7 +1,7 @@
 <?php
   session_start();
   if(isset($_SESSION['dglogin']) && $_SESSION['dglogin'] === true){
-    header("location: account.php");
+    header("location: account.php?signedUp=true");
     exit;
   }
   include "header.php";

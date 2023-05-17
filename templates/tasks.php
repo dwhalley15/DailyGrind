@@ -7,8 +7,8 @@
 
     <div class="container" id="newTaskFromContainer">
         <form name="taskCreationForm" id="taskCreationForm" action="<?php echo htmlspecialchars("../scripts/php/createNewTaskScript.php"); ?>" method="post">
-            <input type="text" class="textInput" id="name" name="name" placeholder="name" maxlength="20" required>
-            <input type="text" class="textInput" id="description" name="description" placeholder="name" maxlength="255" required>
+            <input type="text" class="textInput" id="name" name="name" placeholder="Task Name" maxlength="20" required>
+            <input type="text" class="textInput" id="description" name="description" placeholder="Task Description" maxlength="255" required>
 
             <select class="textInput" id="type" name="type" placeholder="name" maxlength="255" required>
                 <option value="task">task</option>
@@ -26,7 +26,7 @@
             <input type="date" class="textInput" id="endTime" name="endTime" placeholder="name" maxlength="10" required
             maxlength="10" required required pattern = "[0-3][0-9]-[0-1][0-9]-[0-9]{4}">
             <br><br>
-            <input onclick='submitTaskForm("taskCreationForm")' type="button" class="btn, navItem" id="newTask" value="Submit">
+            <input onclick='submitTaskForm("taskCreationForm")' type="button" class="formInputButton, pageButton" id="newTask" value="Submit">
         </form>
     </div>
 
@@ -35,7 +35,6 @@
     </div>
 
     <div class="container, hiddenTab" id="friendsLeaderBoard">
-        <h3>Tasks Leaderboard</h3>
         <?php include "../scripts/php/loadLeaderBoard.php" ?>
     </div>
 </div>
@@ -43,27 +42,28 @@
 
 <script type="text/javascript">
     <?php
+
     //Php check after (update, delete, create, etc) to see which alerts to send:
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_delete_error']){
-        echo("myAlert(\"" . $_SESSION['task_delete_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_delete_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_delete_error_text']."')");
         $_SESSION['task_delete_error'] = "false";
         $_SESSION['task_delete_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_update_error']){
-        echo("myAlert(\"" . $_SESSION['task_update_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_update_error']) && $_SESSION['task_update_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_update_error_text']."')");
         $_SESSION['task_update_error'] = "false";
         $_SESSION['task_update_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_create_error']){
-        echo("myAlert(\"" . $_SESSION['task_create_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_create_error']) && $_SESSION['task_create_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_create_error_text']."')");
         $_SESSION['task_create_error'] = "false";
         $_SESSION['task_create_error_text'] = "";
     }
 
-    if(isset($_SESSION['task_delete_error']) && $_SESSION['task_date_error']){
-        echo("myAlert(\"" . $_SESSION['task_date_error_text']?: "unknown error" . "\")");
+    if(isset($_SESSION['task_date_error']) && $_SESSION['task_date_error'] == 'true'){
+        echo("myAlert('" . $_SESSION['task_date_error_text']."')");
         $_SESSION['task_date_error'] = "false";
         $_SESSION['task_date_error_text'] = "";
     }
@@ -88,7 +88,7 @@
 
         var removeAlertButton = document.createElement("button");
         removeAlertButton.classList.add("btn");
-        removeAlertButton.classList.add("navItem");
+        removeAlertButton.classList.add("pageButton");
         removeAlertButton.innerText = "Close Alert";
         removeAlertButton.onclick = function() {
             let alertBoxRemv = document.getElementById(alertBox.id);
@@ -108,12 +108,38 @@
     }
 
 
+    function dateToString(){
+        let date = Date().toString().split(" ");
+        stringDateToDigit = [{
+            "January": "01",
+            "Febuary": "02",
+            "March": "03",
+            "April": "04",
+            "May": "05",
+            "June": "06",
+            "July": "07",
+            "August": "08",
+            "September": "09",
+            "October": "10",
+            "November": "11",
+            "December": "12"}
+        ];
+        let month = stringDateToDigit[0][date[1]];
+        let year = date[3];
+        let day = date[2];
+        let date_date = year + "-" + month + "-" + day;
+        console.log(date_date);
+        return date_date
+    }
+
+
     //Let users know when the task is about to end:
     function checkTaskEnd(){
         const tasks = document.getElementsByClassName("task");
         console.log(tasks);
         Array.from(tasks).forEach(task => {
-            if(Date(task.elements["endTime"]) == Date()){
+            console.log(task.elements["endTime"].value);
+            if(task.elements["endTime"].value == dateToString()){
                 myAlert("Task: " + task.elements["name"]["value"] + " This task is about to end!");
                 console.log("TaskTypes1");
             }
@@ -258,6 +284,7 @@
 
     
     function submitTaskForm(formID = "newTaskFromContainer"){
+        console.log("submitTaskForm");
         var forms = document.getElementById(formID);
         var formInputs = forms.querySelectorAll('input[type="text"], input[type="date"], select');
 
@@ -287,50 +314,18 @@
 
         var date1 = new Date(startDateInput.value);
         var date2 = new Date(endDateInput.value);
+        console.log(date1.toDateString(), date2.toDateString());
 
-        if(date1 < new Date()){
+        if(date1.toDateString() < (new Date()).toDateString()){
             myAlert("The start can't be before today");
-            return
+            return;
         }
 
-        if(date2 < date1){
+        if(date2.toDateString() < date1.toDateString()){
             myAlert("The start date must come before the end date");
-            return
+            return;
         }
 
         document.forms[formID].submit();
     }
 </script>
-
-
-<style>
-    .popup {
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: none;
-    }
-    .popup-content {
-        background-color: white;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888888;
-        width: 30%;
-        font-weight: bolder;
-    }
-    .popup-content button {
-        display: block;
-        margin: 0 auto;
-    }
-    .show {
-        display: block;
-    }
-    h1 {
-        color: green;
-    }
-</style>

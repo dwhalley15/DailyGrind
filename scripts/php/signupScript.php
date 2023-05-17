@@ -29,7 +29,7 @@ if(!empty($_POST) && isset($_POST)){
     $_SESSION['name'] = $fullName;
     $_SESSION['status'] = $status;
     $_SESSION['theme'] = $theme;
-    header("location: ../../templates/account.php");
+    header("location: ../../templates/account.php?signedUp=true");
   }
   else{
     header("location: ../../templates/signup.php");
